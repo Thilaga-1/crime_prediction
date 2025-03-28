@@ -1,0 +1,99 @@
+<!-- templates/report_template.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crime Prediction Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2, h3 { color: #002244; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        td, th { border: 1px solid #ccc; padding: 8px; }
+        .chart-section { margin-bottom: 30px; }
+        .chart-section img { max-width: 100%; height: auto; border: 1px solid #ccc; }
+        .chart-description { font-style: italic; color: #555; }
+    </style>
+</head>
+<body>
+    <h1>Crime Prediction Report</h1>
+    
+    <h2>Prediction Details</h2>
+    <table>
+        <tr><th>City</th><td>{{ city_name }}</td></tr>
+        <tr><th>Crime Type</th><td>{{ crime_type }}</td></tr>
+        <tr><th>Year</th><td>{{ year }}</td></tr>
+        <tr><th>Crime Status</th><td>{{ crime_status }}</td></tr>
+        <tr><th>Crime Rate</th><td>{{ crime_rate }}</td></tr>
+        <tr><th>Estimated Cases</th><td>{{ cases }}</td></tr>
+        <tr><th>Population (Lakhs)</th><td>{{ population }}</td></tr>
+    </table>
+    
+    <h2>Visual Insights</h2>
+
+    <!-- Bar Chart -->
+    <div class="chart-section">
+        <h3>Crime Statistics Bar Chart</h3>
+        {% if bar_chart %}
+        <img src="data:image/png;base64,{{ bar_chart }}" alt="Bar Chart">
+        {% else %}
+        <p>Bar chart could not be generated.</p>
+        {% endif %}
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="chart-section">
+        <h3>Crime Type Distribution Pie Chart</h3>
+        {% if pie_chart %}
+        <img src="data:image/png;base64,{{ pie_chart }}" alt="Pie Chart">
+        {% else %}
+        <p>Pie chart could not be generated.</p>
+        {% endif %}
+    </div>
+
+    <!-- Line Chart -->
+    <div class="chart-section">
+        <h3>Crime Trends Over the Years</h3>
+        {% if line_chart %}
+        <img src="data:image/png;base64,{{ line_chart }}" alt="Line Chart">
+        {% else %}
+        <p>Line chart could not be generated.</p>
+        {% endif %}
+    </div>
+
+    <!-- Forecast Chart -->
+    <!-- <div class="chart-section">
+        <h3>Future Crime Rate Forecast</h3>
+        {% if forecast_chart %}
+        <img src="data:image/png;base64,{{ forecast_chart }}" alt="Forecast Chart">
+        {% else %}
+        <p>Forecast chart could not be generated (city_code or crime_code missing?).</p>
+        {% endif %}
+    </div> -->
+
+    <!-- Gauge Chart -->
+    <div class="chart-section">
+        <h3>Current Crime Rate Gauge</h3>
+        {% if gauge_chart %}
+        <img src="data:image/png;base64,{{ gauge_chart }}" alt="Gauge Chart">
+        {% else %}
+        <p>Gauge chart could not be generated.</p>
+        {% endif %}
+    </div>
+
+    <!-- Scatter Chart -->
+    <!-- <div class="chart-section">
+        <h3>Population vs. Estimated Cases (Forecast)</h3>
+        {% if scatter_chart %}
+        <img src="data:image/png;base64,{{ scatter_chart }}" alt="Scatter Chart">
+        {% else %}
+        <p>Scatter chart could not be generated.</p>
+        {% endif %}
+    </div> -->
+
+    <h2>Insights and Analysis</h2>
+    <p>
+        By combining these charts, we gain a comprehensive view of both historical crime trends and future forecasts.
+        Ensure that city_code and crime_code are provided if you want to see forecast and scatter charts.
+    </p>
+</body>
+</html>

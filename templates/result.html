@@ -1,100 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crime Rate Prediction</title>
-    <link rel="icon" href="static/images/favicon.png" type="image/png">
-    
-    <link rel="stylesheet" href="static/styles.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap');
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crime Rate Prediction Dashboard</title>
+  <link rel="icon" href="static/images/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="static/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="static/css/result.css">
+
 </head>
-
 <body>
-    <header>
-        <h1 class = "title">Crime Rate Predictor</h1>
-        <h2 class = "tagline">Unlock safety: Reduce crime rate together</h2>
-    </header>       
-    
-    <section class="prediction">
-        <table class="table2">
-            <tr class="r1">
-                <td class="label">
-                    <label>Selected City Name :</label>
-                </td>
-                <td class="sel">
-                    <select>
-                        <option value="selected">{{city_name}}</option>
-                </td>
-            </tr>
-            <tr class="r1">
-                <td class="label">
-                    <label>Selected Crime Type :</label>
-                </td>
-                <td class="sel">
-                    <select >
-                        <option value="selected">{{crime_type}}</option>
-                </td>
-            </tr>
-            <tr class="r1">
-                <td class="label">
-                    <label>Selected Year :</label>
-                </td>
-                <td class="sel">
-                    <select>
-                        <option value="selected">{{year}}</option>
-                </td>
-            </tr>
+  <header>
+    <div class="header-container">
+      <h1 class="logo">Crime Lens</h1>
+      <nav class="nav">
+        <ul>
+          <li><a href="{{ url_for('index') }}">Dashboard</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <!-- Prediction Details Card -->
+      <section class="card prediction-details">
+        <h2>Prediction Details</h2>
+        <table>
+          <tr>
+            <td>City:</td>
+            <td>{{ city_name }}</td>
+          </tr>
+          <tr>
+            <td>Crime Type:</td>
+            <td>{{ crime_type }}</td>
+          </tr>
+          <tr>
+            <td>Year:</td>
+            <td>{{ year }}</td>
+          </tr>
+          <tr>
+            <td>Crime Status:</td>
+            <td>{{ crime_status }}</td>
+          </tr>
+          <tr>
+            <td>Crime Rate:</td>
+            <td>{{ crime_rate }}</td>
+          </tr>
+          <tr>
+            <td>Estimated Cases:</td>
+            <td>{{ cases }}</td>
+          </tr>
+          <tr>
+            <td>Population (Lakhs):</td>
+            <td>{{ population }}</td>
+          </tr>
         </table>
-
-        <table class="table3">         
-            
-            <tr class="r2""> 
-                <td class="result">Prediction :</td>
-                <td class="result">{{crime_status}}</td>
-            </tr>
-            <tr class="r2">
-                <td class="result">Estimated Crime Rate :</td>
-                <td class="result">{{crime_rate}}</td>
-            </tr>
-            <tr class="r2">
-                <td class="result">Estimated Number of Cases :</td>
-                <td class="result">{{cases}}</td>
-            </tr>
-            <tr class="r2">
-                <td class="result">Population (in Lakhs) :</td>
-                <td class="result">{{population}}</td>
-            </tr>
-        </table>
-
-        <div class="button2" >
-            <a href="http://127.0.0.1:5000">
-                <input type="submit" class="btn id="check_again"" value="Let's Check Again" >
-            </a>            
-        </div> 
-        
-    </section>
-
-    <footer>
-        <div class="footer">
-            <div id="developer">
-                <h3 >Developed By: &emsp; Abhay Rautela</h3>
+      </section>
+      
+      <!-- Toggle Button for Advanced Insights -->
+      <button id="toggle-btn" class="btn">Show Advanced Insights</button>
+      
+      <!-- Charts Section with ID added -->
+      <section class="card charts-section" id="charts-section">
+        <h2>Advanced Insights</h2>
+        <!-- Your form and charts go here -->
+        <form action="/download_pdf" method="POST">
+          <!-- hidden inputs -->
+          <input type="hidden" name="city_name" value="{{ city_name }}">
+          <input type="hidden" name="crime_type" value="{{ crime_type }}">
+          <input type="hidden" name="year" value="{{ year }}">
+          <input type="hidden" name="crime_status" value="{{ crime_status }}">
+          <input type="hidden" name="crime_rate" value="{{ crime_rate }}">
+          <input type="hidden" name="cases" value="{{ cases }}">
+          <input type="hidden" name="population" value="{{ population }}">
+          <!-- additional hidden inputs -->
+          <input type="hidden" name="city_code" value="{{ city_code }}">
+          <input type="hidden" name="crime_code" value="{{ crime_code }}">
+          <button type="submit" class="btn">Download Full Report (PDF)</button>
+        </form>
+        <br>
+        <div class="charts-grid">
+          <!-- Gauge Chart Card -->
+          <div class="chart-card">
+            <button class="maximize-btn">&#x26F6;</button>
+            <h3>Current Crime Rate Gauge</h3>
+            <div class="chart-container" id="gauge-chart">
+              {{ gauge_chart_div | safe }}
             </div>
-            <div id="linkedin">
-                <a href="https://www.linkedin.com/in/tushar-sharma-2001/" target="_blank">
-                    <img src="static/images/linkedin.png" alt="linkedIn" width="35" >                
-                </a>  
+          </div>
+          <!-- Pie Chart Card -->
+          <div class="chart-card">
+            <button class="maximize-btn">&#x26F6;</button>
+            <h3>Crime Type Distribution</h3>
+            <div class="chart-container" id="pie-chart">
+              {{ pie_chart_div | safe }}
             </div>
-            <div id="github">
-                <a href="https://github.com/Tushar0804" target="_blank">
-                    <img src="static/images/github.png" alt="GitHub" width="35">
-                </a>
+          </div>
+          <!-- Bar Chart Card -->
+          <div class="chart-card" style="grid-column: span 2;">
+            <button class="maximize-btn">&#x26F6;</button>
+            <h3>Crime Statistics</h3>
+            <div class="chart-container">
+              {{ plotly_div | safe }}
             </div>
-        </div>       
-    </footer>    
+          </div>
+          <!-- Line Chart Card -->
+          <div class="chart-card" style="grid-column: span 2;">
+            <button class="maximize-btn">&#x26F6;</button>
+            <h3>Crime Trends Over the Years</h3>
+            <div class="chart-container">
+              {{ line_chart_div | safe }}
+            </div>
+          </div>
+          <!-- Forecast Chart Card -->
+          <div class="chart-card" style="grid-column: span 2;">
+            <button class="maximize-btn">&#x26F6;</button>
+            <h3>Future Crime Rate Forecast</h3>
+            <div class="chart-container">
+              {{ forecast_chart_div | safe }}
+            </div>
+          </div>
+          <!-- Scatter Chart Card -->
+          <div class="chart-card" style="grid-column: span 2;">
+            <button class="maximize-btn">&#x26F6;</button>
+            <h3>Population vs. Estimated Cases</h3>
+            <div class="chart-container">
+              {{ scatter_chart_div | safe }}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <!-- Modal for Maximized Chart -->
+  <div id="modal">
+    <div id="modal-content">
+      <button id="modal-close">Minimize</button>
+      <div id="modal-chart-container"></div>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="footer-content">
+      <p>Developed By: Thilaga</p>
+    </div>
+  </footer>
+  
+  <script src="static\js\result.js"></script>
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Crime Lens Dashboard</title>
+  <link rel="icon" href="static/images/favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1 class="logo">Crime Lens</h1>
+      <nav class="nav">
+        <ul>
+          <li><a href="{{ url_for('index') }}">Dashboard</a></li>
+          <li><a href="{{ url_for('about') }}" class="active">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <section class="card about-card">
+        <h2>About the Application</h2>
+        <p>
+          Crime rate prediction has become an important tool for law enforcement agencies to help them better understand patterns of crime and anticipate where crime is likely to occur. By predicting future crime trends, law enforcement agencies can better allocate resources to areas that are likely to experience increases in criminal activity. This could lead to a decrease in crime overall, as well as an increase in public safety. Additionally, crime rate prediction can help police departments develop better strategies for responding to crime as it happens.
+        </p>
+        <p>
+          The dataset is prepared manually based on the publication available on the Indian National Crime Rate Bureau (NCRB) official website. This data provides statistics on crimes committed in 19 metropolitan cities during the years 2014 to 2021. With the help of this application, we can predict the crime rates for 10 different categories of crime that are likely to occur in 19 Indian metropolitan cities over the next few years. It includes statistics on 10 different categories of crime, including murder, kidnapping, crime against women, crime against children, crime committed by juveniles, crime against senior citizens, crime against SC, crime against ST, economic offences and cyber crimes.
+        </p>
+        <p>
+          The system uses scikit-learn's Random Forest Regression model, which takes year, city name, and crime type data as inputs. Random Forest Regression is an ensemble learning technique that creates a number of decision trees to predict continuous values. Averaging the predictions results in higher accuracy—in this case, a prediction accuracy of 93.20% on the testing dataset.
+        </p>
+      </section>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-content">
+      <p>Developed By: Thilaga</p>
+      <div class="social-links">
+        <a href="#"><img src="static/images/linkedin.png" alt="LinkedIn"></a>
+        <a href="#"><img src="static/images/github.png" alt="GitHub"></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

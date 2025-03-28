@@ -1,0 +1,2 @@
+https://wkhtmltopdf.org/downloads.html
+pip install -U kaleido
